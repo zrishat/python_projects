@@ -1,15 +1,17 @@
 import random
 import sys
 
+CPU_TYPE = 1
+
 
 class Player:
     """
     Игрок
     """
-    def __init__(self):
+    def __init__(self, is_cpu=False):
         self.name = ''
         self.player_card = self.generate_card()
-        self.cpu = False
+        self.cpu = is_cpu
 
     def generate_card(self):
         player_card = []
@@ -68,12 +70,19 @@ players = []
 for id in range(number_players):
     print(f'Введите тип {id+1} игрока (1 - комп, 2 - человек)')
     player_type = int(input('Введите число: '))
-    new_player = Player()
-    if player_type == 1:
-        new_player.cpu = True
+    if player_type == CPU_TYPE:
+        new_player = Player(True)
+    else:
+        new_player = Player()
     players.append(new_player)
 
 bag = Bag()
+
+
+def all_numbers_is_out(player_cards):
+    # вернет True, если все числа зачеркнуты
+    return len(set(player_cards)) == 2
+
 
 while len(bag.kegs)+1:
     print(bag)
@@ -81,7 +90,7 @@ while len(bag.kegs)+1:
     for id, player in enumerate(players):
         player_cards = player.player_card
 
-        if len(set(player_cards)) == 2:
+        if all_numbers_is_out(player_cards):
             print(f'Игрок {id+1} выиграл!')
             sys.exit()
 
