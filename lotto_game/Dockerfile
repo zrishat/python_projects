@@ -4,4 +4,4 @@ WORKDIR /src
 COPY . .
 RUN pip install -r requirements.txt --no-cache-dir
 
-CMD ["./start_game.py"]
+CMD ["python", "./start_game.py"]

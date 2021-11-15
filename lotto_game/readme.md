@@ -8,6 +8,11 @@ python3 start_game.py
 ```
 Запуск игры через Docker
 ```
-docker-compose up
+docker image build -t lotto_game:latest .
+docker container run -it lotto_game
+```
+Запуск игры через Docker-compose
+```
+docker-compose up -d && docker logs lotto_game_app_1 && docker attach lotto_game_app_1
 ```
 В интерактивном режиме выбирается количество игроков и тип игрока.

@@ -1,64 +1,8 @@
-import random
 import sys
-
-CPU_TYPE = 1
-
-
-class Player:
-    """
-    Игрок
-    """
-    def __init__(self, is_cpu=False):
-        self.name = ''
-        self.player_card = self.generate_card()
-        self.cpu = is_cpu
-
-    def generate_card(self):
-        player_card = []
-        all_numbers = list(range(1, 91))
-        # генерируем числа в карточке
-        for i in range(15):
-            random_value = random.choice(all_numbers)
-            all_numbers.remove(random_value)
-            # добавляем пробел к числу для лучшего форматирования
-            if random_value < 10:
-                random_value = f' {random_value}'
-            player_card.append(str(random_value))
-        # генерируем пробелы в карточке
-        for i in range(len(player_card)):
-            player_card.insert(random.choice(range(15)), '  ')
-        return player_card
-
-
-class Bag:
-    """
-    Мешок
-    """
-    def __init__(self):
-        # общее число бочонков
-        self.kegs = list(range(1, 91))
-        self.current_keg = None
-
-    def __str__(self):
-        """
-        Генерация текущего боченка
-        """
-        rand_keg = random.choice(self.kegs)
-        if rand_keg < 10:
-            self.current_keg = f' {rand_keg}'
-        else:
-            self.current_keg = str(rand_keg)
-        self.kegs.remove(rand_keg)
-        return f'Новый бочонок: {self.current_keg} (осталось {len(self.kegs)})'
-
-
-def show_formatted_card(card_list):
-    print('-'*30)
-    print('|'.join(card_list[:10]))
-    print('|'.join(card_list[10:20]))
-    print('|'.join(card_list[20:]))
-    print('-'*30)
-
+from Bag import Bag
+from Player import Player
+from utils import all_numbers_is_out, show_formatted_card
+from configurations import CPU_TYPE
 
 print('ЛОТЕРЕЯ\n',
       '-'*10, "\n"
@@ -77,11 +21,6 @@ for id in range(number_players):
     players.append(new_player)
 
 bag = Bag()
-
-
-def all_numbers_is_out(player_cards):
-    # вернет True, если все числа зачеркнуты
-    return len(set(player_cards)) == 2
 
 
 while len(bag.kegs)+1:
